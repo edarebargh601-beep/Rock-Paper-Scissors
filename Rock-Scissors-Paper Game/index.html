@@ -1,143 +1,151 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>سنگ، کاغذ، قیچی</title>
-<style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بازی سنگ کاغذ قیچی</title>
+  <style>
+    @font-face {
+      font-family: 'Nian';
+      src: url('Nian-Black.ttf') format('truetype');
+    }
 
-html, body {
-  height: 100%;
-  direction: rtl;
-  background: linear-gradient(180deg, #0ea5e9, #8b5cf6);
-  font-family: sans-serif;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    body {
+      font-family: 'Nian', sans-serif;
+      background: linear-gradient(135deg, #1e1f3b, #3a2b74);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+      color: #f3f3f3;
+      overflow: hidden;
+    }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 600px;
-}
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
 
-/* دکمه‌های سطح سختی */
-.level-btn {
-  width: 180px;
-  height: 60px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  border-radius: 15px;
-  margin: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.level-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
-}
-.easy { background-color: #22c55e; }
-.medium { background-color: #eab308; }
-.hard { background-color: #ef4444; }
+    .mode-btn {
+      padding: 12px 25px;
+      margin: 8px;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: #fff;
+    }
 
-/* آیکون‌های سنگ، کاغذ، قیچی */
-.icon-btn {
-  width: 120px;
-  height: 120px;
-  margin: 15px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.25s ease;
-}
-.icon-btn img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: all 0.25s ease;
-}
+    .mode-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 15px rgba(255,255,255,0.25);
+    }
 
-/* ✨ انیمیشن انتخاب */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
-}
+    .easy { background-color: #34a853; }
+    .medium { background-color: #fbbc05; }
+    .hard { background-color: #ea4335; }
 
-.icon-btn:hover img {
-  transform: scale(1.08);
-  filter: brightness(1.1);
-}
-.selected img {
-  filter: brightness(1.5) drop-shadow(0 0 15px #fff);
-  animation: pulse 0.4s ease;
-}
+    .game-container { display: none; }
 
-#countdown {
-  font-size: 4rem;
-  margin: 20px;
-}
+    .icon-btn {
+      background: none;
+      border: none;
+      margin: 0 15px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-#emojis {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 150px;
-  margin: 20px 0;
-}
+    .icon-btn img {
+      width: 90px;
+      height: 90px;
+      transition: transform 0.2s, filter 0.2s;
+    }
 
-.icon {
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
+    .icon-btn:hover img {
+      transform: scale(1.1);
+    }
 
-#result {
-  font-size: 2rem;
-  margin-top: 10px;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
+    .icon-btn.selected img {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 10px #4ef3ff);
+    }
 
-#score {
-  font-size: 1.5rem;
-  margin-top: 10px;
-}
-</style>
+    .countdown {
+      font-size: 2rem;
+      margin: 20px 0;
+      color: #fff;
+    }
+
+    .emoji-container {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+    }
+
+    .emoji-container img {
+      width: 100px;
+      height: 100px;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+
+    .result {
+      font-size: 1.8rem;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.8s;
+      color: #fff;
+    }
+
+    .score {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .mode-message {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      margin-top: 15px;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #e5e5e5;
+    }
+
+    .mode-message.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-  <h1>🎮 سنگ، کاغذ، قیچی</h1>
+  <h1>🎮 بازی سنگ، کاغذ، قیچی</h1>
 
   <div id="welcome">
-    <p>سطح سختی را انتخاب کن:</p>
-    <button class="level-btn easy" onclick="startGame('Easy')">Easy 🟢</button>
-    <button class="level-btn medium" onclick="startGame('Medium')">Medium 🟡</button>
-    <button class="level-btn hard" onclick="startGame('Hard')">Hard 🔴</button>
+    <p>یکی از حالت‌ها رو انتخاب کن:</p>
+    <button class="mode-btn easy" onclick="startGame('Easy')">Easy </button>
+    <button class="mode-btn medium" onclick="startGame('Medium')">Medium </button>
+    <button class="mode-btn hard" onclick="startGame('Hard')">Hard </button>
   </div>
 
-  <div id="game" style="display:none;">
-    <div id="countdown"></div>
+  <div id="mode-message" class="mode-message"></div>
 
-    <p>حرکت خود را انتخاب کن:</p>
+  <div id="game" class="game-container">
+    <div class="countdown" id="countdown"></div>
+
+    <div class="emoji-container" id="emojis"></div>
+
+    <div id="result" class="result"></div>
+
     <div>
       <button class="icon-btn" onclick="selectChoice('rock')">
         <img src="rock.png" alt="سنگ">
@@ -150,99 +158,140 @@ html, body {
       </button>
     </div>
 
-    <div id="emojis"></div>
-    <div id="result"></div>
-    <div id="score">امتیاز → تو: 0 | بات: 0</div>
+    <div id="score" class="score">امتیاز → تو: 0 | بات: 0</div>
   </div>
-</div>
 
-<script>
-let options = ["rock","paper","scissors"];
-let userChoice = "", botChoice = "";
-let score = { user:0, bot:0 };
-let countdownInterval;
+  <script>
+    let options = ["rock", "paper", "scissors"];
+    let userChoice = "", botChoice = "";
+    let score = { user: 0, bot: 0 };
+    let countdownInterval;
+    let mode = "Easy";
+    let history = { rock: 0, paper: 0, scissors: 0 };
 
-function startGame(mode){
-  document.getElementById("welcome").style.display = "none";
-  document.getElementById("game").style.display = "block";
-  startRound();
-}
+    function startGame(selectedMode) {
+      mode = selectedMode;
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("game").style.display = "block";
 
-function botEasy(){ return options[Math.floor(Math.random()*3)]; }
+      const message = document.getElementById("mode-message");
+      let text = "";
+      if (mode === "Easy") text = "😎 آسان گرفتی؟ ببین شانس با توئه یا نه!";
+      else if (mode === "Medium") text = "⚙️ متعادل و منصفانه! بزن بریم 🤜🤛";
+      else if (mode === "Hard") text = "💀 حواستو جمع کن... من دارم ذهنتو می‌خونم 😈";
 
-function selectChoice(choice){
-  userChoice = choice;
-  document.querySelectorAll(".icon-btn").forEach(btn => btn.classList.remove("selected"));
-  event.target.closest("button").classList.add("selected");
-}
-
-function startRound(){
-  userChoice = "";
-  botChoice = "";
-  document.getElementById("emojis").innerHTML = "";
-  document.getElementById("result").innerText = "";
-  document.getElementById("countdown").innerText = "";
-
-  let count=3;
-  document.getElementById("countdown").innerText = count;
-  countdownInterval = setInterval(()=>{
-    count--;
-    document.getElementById("countdown").innerText = count>0?count:"";
-    if(count===0){
-      clearInterval(countdownInterval);
-      if(!userChoice) userChoice = options[Math.floor(Math.random()*3)];
-      executeRound();
-    }
-  },1000);
-}
-
-function executeRound(){
-  botChoice = botEasy();
-
-  let winner="";
-  if(userChoice===botChoice){ winner="⚖️ مساوی!"; }
-  else if(
-    (userChoice==="rock"&&botChoice==="scissors")||
-    (userChoice==="scissors"&&botChoice==="paper")||
-    (userChoice==="paper"&&botChoice==="rock")
-  ){
-    winner="🎉 تو بردی!"; score.user++;
-  } else {
-    winner="💻 بات برد!"; score.bot++;
-  }
-
-  const emojisDiv = document.getElementById("emojis");
-
-  const userImg = document.createElement("img");
-  const botImg = document.createElement("img");
-  userImg.src = `${userChoice}.png`;
-  botImg.src = `${botChoice}.png`;
-  userImg.classList.add("icon");
-  botImg.classList.add("icon");
-
-  emojisDiv.appendChild(userImg);
-  emojisDiv.appendChild(botImg);
-
-  setTimeout(()=>{
-    userImg.style.opacity = "1";
-    botImg.style.opacity = "1";
-    document.getElementById("result").innerText = winner;
-    document.getElementById("result").style.opacity = "1";
-    document.getElementById("score").innerText = `امتیاز → تو: ${score.user} | بات: ${score.bot}`;
-  },100);
-
-  setTimeout(()=>{
-    userImg.style.opacity = "0";
-    botImg.style.opacity = "0";
-    document.getElementById("result").style.opacity = "0";
-    setTimeout(()=>{
-      emojisDiv.innerHTML = "";
-      document.getElementById("result").innerText = "";
+      message.innerText = text;
+      message.classList.add("show");
+      setTimeout(() => message.classList.remove("show"), 2500);
       startRound();
-    },800);
-  },2500);
-}
-</script>
+    }
 
+    function selectChoice(choice) {
+      userChoice = choice;
+      history[choice]++;
+      document.querySelectorAll(".icon-btn").forEach(btn => btn.classList.remove("selected"));
+      event.target.closest("button").classList.add("selected");
+    }
+
+    function botEasy() {
+      return options[Math.floor(Math.random() * 3)];
+    }
+
+    function botMedium() {
+      let random = Math.random();
+      if (random < 0.4) return userChoice;
+      if (random < 0.8) return loseTo(userChoice);
+      return winAgainst(userChoice);
+    }
+
+    function botHard() {
+      let mostUsed = Object.entries(history).sort((a, b) => b[1] - a[1])[0][0];
+      if (Math.random() < 0.8) {
+        return winAgainst(mostUsed);
+      } else {
+        return botEasy();
+      }
+    }
+
+    function winAgainst(choice) {
+      if (choice === "rock") return "paper";
+      if (choice === "paper") return "scissors";
+      if (choice === "scissors") return "rock";
+    }
+
+    function loseTo(choice) {
+      if (choice === "rock") return "scissors";
+      if (choice === "paper") return "rock";
+      if (choice === "scissors") return "paper";
+    }
+
+    function startRound() {
+      userChoice = "";
+      botChoice = "";
+      document.getElementById("emojis").innerHTML = "";
+      document.getElementById("result").innerText = "";
+      document.getElementById("countdown").innerText = "";
+
+      let count = 3;
+      document.getElementById("countdown").innerText = count;
+      countdownInterval = setInterval(() => {
+        count--;
+        document.getElementById("countdown").innerText = count > 0 ? count : "";
+        if (count === 0) {
+          clearInterval(countdownInterval);
+          if (!userChoice) userChoice = options[Math.floor(Math.random() * 3)];
+          executeRound();
+        }
+      }, 1000);
+    }
+
+    function executeRound() {
+      if (mode === "Easy") botChoice = botEasy();
+      else if (mode === "Medium") botChoice = botMedium();
+      else botChoice = botHard();
+
+      let winner = "";
+      if (userChoice === botChoice) { winner = "⚖️ مساوی!"; }
+      else if (
+        (userChoice === "rock" && botChoice === "scissors") ||
+        (userChoice === "scissors" && botChoice === "paper") ||
+        (userChoice === "paper" && botChoice === "rock")
+      ) {
+        winner = "🎉 تو بردی!";
+        score.user++;
+      } else {
+        winner = "💻 بات برد!";
+        score.bot++;
+      }
+
+      const emojisDiv = document.getElementById("emojis");
+      const userImg = document.createElement("img");
+      const botImg = document.createElement("img");
+      userImg.src = `${userChoice}.png`;
+      botImg.src = `${botChoice}.png`;
+
+      emojisDiv.appendChild(userImg);
+      emojisDiv.appendChild(botImg);
+
+      setTimeout(() => {
+        userImg.style.opacity = "1";
+        botImg.style.opacity = "1";
+        document.getElementById("result").innerText = winner;
+        document.getElementById("result").style.opacity = "1";
+        document.getElementById("score").innerText = `امتیاز → تو: ${score.user} | بات: ${score.bot}`;
+      }, 100);
+
+      setTimeout(() => {
+        userImg.style.opacity = "0";
+        botImg.style.opacity = "0";
+        document.getElementById("result").style.opacity = "0";
+        setTimeout(() => {
+          emojisDiv.innerHTML = "";
+          document.getElementById("result").innerText = "";
+          startRound();
+        }, 700);
+      }, 2500);
+    }
+  </script>
 </body>
 </html>
